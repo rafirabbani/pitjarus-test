@@ -15,18 +15,10 @@ const getProductReport = async (request, response) => {
             if(storeList.length < 1) {
                 return response.status(404).send({status: 'error', message: 'Store not Exist in Area'});
             }
-            const sales = {};
-            for (const store of storeList) {
-                const storeSales = await ReportModel.getStoreReportByStoreId({storeId: store.store_id, startDate, endDate});
-                if (storeSales.length < 1) {
-                    return response.status(404).send({status: 'error', message: 'Data not found'});
-                }
-                storeSales.map(data => {
-                    data['percentage'] = Math.round(data.total_sales / data.total_product * 100);
-                })
-                sales[store.area_name] = storeSales;
-            }
-            return response.status(200).send(sales);
+            const salesTotal = await ReportModel.getStoreReportByStoreId({storeId: storeList.map(r => r.store_id)})
+            
+            
+            return response.status(200).send({status: 'success', data: salesTotal});
         }
         else {
             response.status(400).send({status: 'error', message: 'Area Id is required'});
@@ -38,6 +30,18 @@ const getProductReport = async (request, response) => {
     } 
 };
 
+const getCityList = async (request, response) => {
+    try {
+        const cityList = await ReportModel.getCityList();
+        return response.status(200).send({status: 'success', data: cityList});
+    }
+    catch (err) {
+        console.error(['ReportController', 'get city list', 'error'], err);
+        return response.status(500).send({status: 'error', error: err});
+    }
+}
+
 module.exports = {
-    getProductReport
+    getProductReport,
+    getCityList
 };

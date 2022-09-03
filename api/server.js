@@ -2,6 +2,7 @@ require('dotenv').config({ path: '../pitjarus.env' });
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const app = express();
 const APP_ENV = process.env.APP_ENV || 'DEV';
 const port = process.env.PORT || 10000;
@@ -10,6 +11,7 @@ const DB_PORT = process.env.DB_PORT;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: '20mb' }));
+app.use(cors());
 
 // API Route
 const ReportRoute = require('./route/ReportRoute');

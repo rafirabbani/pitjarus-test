@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+
+.filterContainer {
+  display: flex;
+  width: 50%;
+}
+
+.dropDownContainer {
+  height: 20rem;
+  width: 30rem;
+  padding: 1rem;
+}
+
+.tableContainer {
+  margin: auto;
+}
+
+.dropDown {
+  height: 15rem;
+  width: 20rem;
+}
